@@ -1,0 +1,8 @@
+ALTER TABLE sessions 
+ALTER COLUMN created_at TYPE TIMESTAMP;
+
+ALTER TABLE sessions 
+ALTER COLUMN created_at SET NOT NULL;
+
+ALTER TABLE sessions 
+ALTER COLUMN created_at SET DEFAULT now();
