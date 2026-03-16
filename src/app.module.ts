@@ -9,6 +9,7 @@ import { configuration } from './config';
 import { SessionsModule } from './sessions/sessions.module';
 import Joi from 'joi';
 import { RedisModule } from './common/redis/redis.module';
+import { MembershipsModule } from './memberships/memberships.module';
 
 @Module({
   imports: [
@@ -35,7 +36,9 @@ import { RedisModule } from './common/redis/redis.module';
     ProjectsModule,
     DatabaseModule,
     SessionsModule,
-    RedisModule
+    RedisModule,
+    OrganizationsModule,
+    MembershipsModule
   ],
 })
 export class AppModule {}

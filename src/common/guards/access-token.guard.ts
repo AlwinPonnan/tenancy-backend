@@ -5,13 +5,11 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtTokenService } from 'src/auth/jwt-token.service';
-import { SessionsService } from 'src/sessions/sessions.service';
 
 @Injectable()
 export class AccessTokenGuard implements CanActivate {
   constructor(
     private readonly jwtTokenService: JwtTokenService,
-    private readonly sessionsService: SessionsService,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
