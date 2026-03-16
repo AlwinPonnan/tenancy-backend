@@ -10,9 +10,36 @@ import { SessionsModule } from './sessions/sessions.module';
 import Joi from 'joi';
 import { RedisModule } from './common/redis/redis.module';
 import { MembershipsModule } from './memberships/memberships.module';
+import { LoggerModule } from 'nestjs-pino';
 
 @Module({
+  
   imports: [
+     LoggerModule.forRoot({
+      pinoHttp: {
+        level: 'info',
+
+        transport: process.env.NODE_ENV !== 'production'
+          ? {
+              target: 'pino-pretty',
+              options: {
+                singleLine: true,
+                colorize: true,
+              },
+            }
+          : undefined,
+
+        genReqId: (req) => {
+          return Math.random().toString(36).substring(2, 10);
+        },
+
+        customLogLevel: (req, res, err) => {
+          if (res.statusCode >= 500 || err) return 'error';
+          if (res.statusCode >= 400) return 'warn';
+          return 'info';
+        },
+      },
+    }),
     ConfigModule.forRoot({
       isGlobal: true,
       load: configuration,
