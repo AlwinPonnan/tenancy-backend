@@ -55,6 +55,7 @@ import { LoggerModule } from 'nestjs-pino';
         REFRESH_TOKEN_SECRET: Joi.string().required(),
         REFRESH_TOKEN_TTL: Joi.string().required(),
         BCRYPT_COST: Joi.number().default(12),
+        RETRY_COUNT: Joi.number().required(),
       }),
     }),
     AuthModule,

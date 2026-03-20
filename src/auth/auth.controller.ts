@@ -22,7 +22,6 @@ export class AuthController {
     @Req() req: Request,
   ) {
     const ipAddress = req.ip;
-    console.log(body.email, body.password, 'password');
     return this.authService.login(
       body.email,
       body.password,

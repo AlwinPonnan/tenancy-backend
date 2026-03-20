@@ -55,11 +55,7 @@ export class JwtTokenService {
       ver: tokenVersion,
     };
 
-    console.log(Math.floor(this.refreshTtl / 1000), 'expires in ', {
-      secret: this.refreshSecret,
-      expiresIn: Math.floor(this.refreshTtl / 1000),
-      algorithm: 'HS256',
-    });
+
     return this.jwtService.signAsync(payload, {
       secret: this.refreshSecret,
       expiresIn: Math.floor(this.refreshTtl / 1000),

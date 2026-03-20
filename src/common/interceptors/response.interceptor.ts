@@ -14,12 +14,6 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, any> {
     return next.handle().pipe(
       map((response) => {
         if (response?.data !== undefined) {
-          console.log({
-            status: Status.SUCCESS,
-            message: response.message,
-            data: response.data,
-            timestamp: new Date().toISOString(),
-          })
             return {
             status: Status.SUCCESS,
             message: response.message,

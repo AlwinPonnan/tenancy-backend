@@ -52,11 +52,8 @@ export class AuthService {
       await this.usersRepository.saveRehashPassword(user.id, hashedPass);
     }
 
-    const { sessionId, tokenVersion } = await this.sessionsService.createSession(
-      user.id,
-      userAgent,
-      ipAddress,
-    );
+    const { sessionId, tokenVersion } =
+      await this.sessionsService.createSession(user.id, userAgent, ipAddress);
 
     const refreshToken = await this.jwtTokenService.signRefreshToken(
       user.id,
@@ -68,10 +65,8 @@ export class AuthService {
       sessionId,
     );
 
-
-    await this.redisService.set('test', 'hello')
-const value = await this.redisService.get('test')
-console.log(value)
+    await this.redisService.set('test', 'hello');
+    const value = await this.redisService.get('test');
     return {
       data: { accessToken, refreshToken },
       message: 'Login successful',
@@ -90,7 +85,7 @@ console.log(value)
       await this.sessionsService.validateSession(sessionId);
     if (!session || session.token_version !== ver) {
       await this.sessionsService.revokeSession(sessionId);
-      throw new UnauthorizedException("TOKEN_REUSE_DETECTED");
+      throw new UnauthorizedException('TOKEN_REUSE_DETECTED');
     }
 
     const newSession: Session | null =
@@ -101,7 +96,10 @@ console.log(value)
       throw new UnauthorizedException();
     }
 
-    const accessToken = await this.jwtTokenService.signAccessToken(userId, sessionId);
+    const accessToken = await this.jwtTokenService.signAccessToken(
+      userId,
+      sessionId,
+    );
     const newrefreshToken = await this.jwtTokenService.signRefreshToken(
       userId,
       sessionId,

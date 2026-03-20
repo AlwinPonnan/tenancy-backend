@@ -28,7 +28,6 @@ export class AccessTokenGuard implements CanActivate {
     }
 
     const payload = await this.jwtTokenService.verifyAccessToken(token);
-    console.log(payload, "payload")
     request.user = {
       userId: payload.sub,
       sessionId: payload.sid,

@@ -12,7 +12,7 @@ export function slugify(text: string): string {
 export function generateSlug(name: string): string {
   const base = slugify(name);
 
-  const id = randomBytes(2).toString("hex"); // 4 chars
+  const id = randomBytes(6).toString("hex"); // 12 chars
 
   return `${base}-${id}`;
 }
