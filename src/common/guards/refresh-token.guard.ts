@@ -34,7 +34,7 @@ export class RefreshTokenGuard implements CanActivate {
 
  
     request.user = {
-      userId: payload.sub,
+      user_id: payload.sub,
       sessionId: payload.sid,
       version: payload.ver,
     };

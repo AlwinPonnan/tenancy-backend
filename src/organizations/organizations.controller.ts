@@ -12,16 +12,16 @@ export class OrganizationsController {
       async refresh(@Req() req) {
         return this.organizationService.createOrganization(
           req.body.name,
-          req.user.userId,
+          req.user.user_id,
         );
       }
 
      @UseGuards(AccessTokenGuard, TenantGuard)
-      @Get('findByOrgIdAndUserId/:orgId')
-      async findOneOrgbyIdAndUserId(@Req() req) {
-        return this.organizationService.findOneOrgbyIdAndUserId(
-          req.context.orgId,
-          req.user.userId,
+      @Get('findByOrgIdAndUserId')
+      async findOneOrgbyIdAnduser_id(@Req() req) {
+        return this.organizationService.findOneOrgbyIdAnduser_id(
+          req.context.organization_id,
+          req.user.user_id,
         );
       }
     

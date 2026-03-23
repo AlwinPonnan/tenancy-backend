@@ -2,8 +2,9 @@ import { Request } from 'express';
 
 export interface RequestWithUser extends Request {
   user: {
-    userId: string;
+    user_id: string;
     sessionId: string;
     version?: number
-  };
+  }
+  context?:{};
 }

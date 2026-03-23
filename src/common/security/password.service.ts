@@ -21,15 +21,15 @@ export class PasswordService {
 
   async compare(
     password:string,
-    passwordHashed:string = this.dummyHash,
+    password_hashed:string = this.dummyHash,
   ): Promise<{
     valid: boolean;
     needsRehash: boolean;
   }> {
-    const isValidPass = await bcrypt.compare(password, passwordHashed);
+    const isValidPass = await bcrypt.compare(password, password_hashed);
     let needsRehash = false;
     if (isValidPass) {
-      needsRehash = this.needsRehash(passwordHashed);
+      needsRehash = this.needsRehash(password_hashed);
     }
     return {
       valid: isValidPass,

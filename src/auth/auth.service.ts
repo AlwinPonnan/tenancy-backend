@@ -19,8 +19,8 @@ export class AuthService {
   async login(
     email: string,
     password: string,
-    userAgent?: string,
-    ipAddress?: string,
+    user_agent?: string,
+    ip_address?: string,
   ): Promise<{
     data: { accessToken: string; refreshToken: string };
     message: string;
@@ -52,13 +52,13 @@ export class AuthService {
       await this.usersRepository.saveRehashPassword(user.id, hashedPass);
     }
 
-    const { sessionId, tokenVersion } =
-      await this.sessionsService.createSession(user.id, userAgent, ipAddress);
+    const { sessionId, token_version } =
+      await this.sessionsService.createSession(user.id, user_agent, ip_address);
 
     const refreshToken = await this.jwtTokenService.signRefreshToken(
       user.id,
       sessionId,
-      tokenVersion,
+      token_version,
     );
     const accessToken = await this.jwtTokenService.signAccessToken(
       user.id,
@@ -76,7 +76,7 @@ export class AuthService {
   async refreshAuthToken(
     sessionId: string,
     ver: number,
-    userId: string,
+    user_id: string,
   ): Promise<{
     data: { accessToken: string; refreshToken: string };
     message: string;
@@ -89,7 +89,7 @@ export class AuthService {
     }
 
     const newSession: Session | null =
-      await this.sessionsService.rotateTokenVersion(sessionId, ver);
+      await this.sessionsService.rotatetoken_version(sessionId, ver);
 
     if (!newSession) {
       await this.sessionsService.revokeSession(sessionId);
@@ -97,11 +97,11 @@ export class AuthService {
     }
 
     const accessToken = await this.jwtTokenService.signAccessToken(
-      userId,
+      user_id,
       sessionId,
     );
     const newrefreshToken = await this.jwtTokenService.signRefreshToken(
-      userId,
+      user_id,
       sessionId,
       newSession.token_version,
     );
@@ -122,9 +122,9 @@ export class AuthService {
   }
 
   async logoutAllSessions(
-    userId: string,
+    user_id: string,
   ): Promise<{ data: null; message: string }> {
-    await this.sessionsService.revokeAllUserSessions(userId);
+    await this.sessionsService.revokeAllUserSessions(user_id);
 
     return {
       data: null,

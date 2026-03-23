@@ -5,8 +5,8 @@ import { MembershipsRepository } from './memberships.repository';
 export class MembershipsService {
   constructor(private readonly membershipsRepository: MembershipsRepository) {}
 
-  async findOneOrgbyIdAndUserId(org_id: string, user_id: string) {
-    let result = await this.membershipsRepository.getMembershipByOrgIdAndUserId(
+  async findOneOrgbyIdAnduser_id(org_id: string, user_id: string) {
+    let result = await this.membershipsRepository.getMembershipByOrgIdAnduser_id(
       org_id,
       user_id,
     );
@@ -18,8 +18,8 @@ export class MembershipsService {
   }
 
 
-    async CheckMembershipByOrgIdAndUserId(org_id: string, user_id: string) {
-    let result = await this.membershipsRepository.CheckMembershipByOrgIdAndUserId(
+    async CheckMembershipByOrgIdAnduser_id(org_id: string, user_id: string) {
+    let result = await this.membershipsRepository.CheckMembershipByOrgIdAnduser_id(
       org_id,
       user_id,
     );

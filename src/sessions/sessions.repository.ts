@@ -8,11 +8,11 @@ export class SessionsRepository {
 
   async createSession(
     sessionId: string,
-    userId: string,
-    expiresAt: Date,
-    tokenVersion: number,
-    userAgent?: string,
-    ipAddress?: string,
+    user_id: string,
+    expires_at: Date,
+    token_version: number,
+    user_agent?: string,
+    ip_address?: string,
   ) {
     const query = `
     INSERT INTO sessions (id, user_id, expires_at, user_agent, ip_address, token_version)
@@ -20,11 +20,11 @@ export class SessionsRepository {
   `;
     await this.db.query(query, [
       sessionId,
-      userId,
-      expiresAt,
-      userAgent ?? null,
-      ipAddress ?? null,
-      tokenVersion,
+      user_id,
+      expires_at,
+      user_agent ?? null,
+      ip_address ?? null,
+      token_version,
     ]);
   }
 
@@ -35,7 +35,7 @@ export class SessionsRepository {
     return result.rows[0] ?? null;
   }
 
-  async incrementTokenVersion(
+  async incrementtoken_version(
     sessionId: string,
     token_version: number,
   ): Promise<Session> {
@@ -60,13 +60,13 @@ export class SessionsRepository {
     await this.db.query(query, [sessionId]);
   }
 
-  async revokeUserSessions(userId: string) {
+  async revokeUserSessions(user_id: string) {
     const query = `UPDATE sessions
         SET revoked_at = NOW()
         WHERE user_id = $1
         RETURNING id, user_id
     `;
-    await this.db.query(query, [userId]);
+    await this.db.query(query, [user_id]);
   }
 
   async deleteExpiredSessions() {

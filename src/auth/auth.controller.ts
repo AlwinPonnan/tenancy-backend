@@ -18,15 +18,15 @@ export class AuthController {
   @Post('login')
   async login(
     @Body() body: { email: string; password: string },
-    @Headers('user-agent') userAgent: string,
+    @Headers('user-agent') user_agent: string,
     @Req() req: Request,
   ) {
-    const ipAddress = req.ip;
+    const ip_address = req.ip;
     return this.authService.login(
       body.email,
       body.password,
-      userAgent,
-      ipAddress,
+      user_agent,
+      ip_address,
     );
   }
 
@@ -37,7 +37,7 @@ export class AuthController {
     return this.authService.refreshAuthToken(
       req.user.sessionId,
       req.user.version,
-      req.user.userId,
+      req.user.user_id,
     );
   }
 
@@ -50,6 +50,6 @@ export class AuthController {
   @UseGuards(AccessTokenGuard)
   @Post('logoutAllSessions')
   async logoutAllSessions(@Req() req: RequestWithUser) {
-    return this.authService.logoutAllSessions(req.user.userId);
+    return this.authService.logoutAllSessions(req.user.user_id);
   }
 }

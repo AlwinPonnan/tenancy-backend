@@ -31,9 +31,9 @@ export class JwtTokenService {
     );
   }
 
-  async signAccessToken(userId: string, sessionId: string): Promise<string> {
+  async signAccessToken(user_id: string, sessionId: string): Promise<string> {
     const payload: JwtAccessPayload = {
-      sub: userId,
+      sub: user_id,
       sid: sessionId,
     };
 
@@ -45,14 +45,14 @@ export class JwtTokenService {
   }
 
   async signRefreshToken(
-    userId: string,
+    user_id: string,
     sessionId: string,
-    tokenVersion: number,
+    token_version: number,
   ): Promise<string> {
     const payload: JwtRefreshPayload = {
-      sub: userId,
+      sub: user_id,
       sid: sessionId,
-      ver: tokenVersion,
+      ver: token_version,
     };
 
 

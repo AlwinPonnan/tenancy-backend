@@ -27,7 +27,7 @@ export class UsersRepository {
   }
 
   async saveRehashPassword(
-    userId: string,
+    user_id: string,
     password: string,
   ): Promise<User | null> {
     const rows = await this.db.query(
@@ -35,7 +35,7 @@ export class UsersRepository {
 SET password_hash = $2,
     updated_at = NOW()
 WHERE id = $1`,
-      [userId, password],
+      [user_id, password],
     );
 
     return rows[0] || null;
@@ -45,14 +45,14 @@ WHERE id = $1`,
     id: string,
     name: string,
     email: string,
-    passwordHash: string,
+    password_hash: string,
   ) {
     await this.db.query(
       `
       INSERT INTO users (id, name, email, password_hash)
       VALUES ($1, $2, $3, $4)
       `,
-      [id, name, email, passwordHash],
+      [id, name, email, password_hash],
     );
   }
 }

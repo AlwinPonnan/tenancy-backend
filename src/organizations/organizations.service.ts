@@ -64,17 +64,17 @@ export class OrganizationsService {
     throw new ConflictException('Could not generate unique organization slug');
   }
 
-  async findOrgsByUserId(user_id: string) {
+  async findOrgsByuser_id(user_id: string) {
 
-    let result = await this.organizationsRepository.findOrgsByUserId(user_id);
+    let result = await this.organizationsRepository.findOrgsByuser_id(user_id);
     if (!result || result.length == 0) {
       throw new NotFoundException('Organization not found');
     }
     return result;
   }
 
-  async findOneOrgbyIdAndUserId(org_id: string, user_id: string) {
-    let result = await this.organizationsRepository.findOneOrgbyIdAndUserId(
+  async findOneOrgbyIdAnduser_id(org_id: string, user_id: string) {
+    let result = await this.organizationsRepository.findOneOrgbyIdAnduser_id(
       org_id,
       user_id,
     );

@@ -15,8 +15,7 @@ export class AccessTokenGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
 
-    const authHeader = request.headers.authorization;
-
+    const authHeader:string| null = request.headers.authorization;
     if (!authHeader) {
       throw new UnauthorizedException('TOKEN_MISSING');
     }
@@ -29,7 +28,7 @@ export class AccessTokenGuard implements CanActivate {
 
     const payload = await this.jwtTokenService.verifyAccessToken(token);
     request.user = {
-      userId: payload.sub,
+      user_id: payload.sub,
       sessionId: payload.sid,
     };
 

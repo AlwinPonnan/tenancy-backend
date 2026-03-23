@@ -12,13 +12,13 @@ export class UsersService {
 
     const normalizedEmail = email.trim().toLowerCase();
 
-    const passwordHash = await bcrypt.hash(password, 10);
+    const password_hash = await bcrypt.hash(password, 10);
 
     await this.usersRepository.createUser(
       id,
       name,
       normalizedEmail,
-      passwordHash,
+      password_hash,
     );
 
     return { id, email: normalizedEmail };

@@ -16,7 +16,7 @@ export class OrganizationsRepository {
     return rows[0] || null;
   }
 
-  async findOrgsByUserId(userId: string) {
+  async findOrgsByuser_id(user_id: string) {
     const rows = await this.db.query(
       `SELECT o.id, o.name
        FROM memberships m
@@ -25,14 +25,14 @@ export class OrganizationsRepository {
        WHERE m.user_id = $1
          AND m.deleted_at IS NULL
          AND o.deleted_at IS NULL;`,
-      [userId],
+      [user_id],
     );
 
     return rows[0] || null;
   }
 
-  async findOneOrgbyIdAndUserId(orgId: string, userId: string) {
-    const {rows} = await this.db.query(
+  async findOneOrgbyIdAnduser_id(organization_id: string, user_id: string) {
+    const { rows } = await this.db.query(
       `SELECT o.id, o.name
      FROM organizations o
      WHERE o.id = $1
@@ -44,12 +44,11 @@ export class OrganizationsRepository {
            AND m.user_id = $2
            AND m.deleted_at IS NULL
        );`,
-      [orgId, userId],
+      [organization_id, user_id],
     );
     return rows[0] || null;
   }
 
-  
   async createOrganization(
     client: PoolClient,
     name: string,
@@ -62,6 +61,17 @@ export class OrganizationsRepository {
     RETURNING id, name, slug
     `,
       [name, slug],
+    );
+
+    return result.rows[0];
+  }
+
+  async checkOrgIsValid(organization_id: string): Promise<{ exists: Boolean }> {
+    const result = await this.db.query(
+      `
+       SELECT exists (SELECT 1 from organizations o where o.id = $1 and o.deleted_at is null);
+      `,
+      [organization_id],
     );
 
     return result.rows[0];

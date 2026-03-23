@@ -15,25 +15,25 @@ export class SessionsService {
     this.sessionTtl = this.configService.getOrThrow<number>('auth.sessionTtl');
   }
 
-  async createSession(userId: string, userAgent?: string, ipAddress?: string) {
+  async createSession(user_id: string, user_agent?: string, ip_address?: string) {
     const sessionId = uuid();
-    const tokenVersion = 1;
+    const token_version = 1;
     const expires_at = new Date(Date.now() + Number(this.sessionTtl));
 
     await this.sessionRepository.createSession(
       sessionId,
-      userId,
+      user_id,
       expires_at,
-      tokenVersion, 
-      userAgent,
-      ipAddress,
+      token_version, 
+      user_agent,
+      ip_address,
     );
 
-    return { sessionId , tokenVersion};
+    return { sessionId , token_version};
   }
 
-  async rotateTokenVersion(sessionId: string, token_version:number): Promise<Session> {
-   let session = await this.sessionRepository.incrementTokenVersion(sessionId,token_version);
+  async rotatetoken_version(sessionId: string, token_version:number): Promise<Session> {
+   let session = await this.sessionRepository.incrementtoken_version(sessionId,token_version);
    return session
   }
 
@@ -51,7 +51,7 @@ export class SessionsService {
   async revokeSession(sessionId: string): Promise<void> {
     await this.sessionRepository.revokeSession(sessionId);
   }
-  async revokeAllUserSessions(userId: string): Promise<void> {
-    await this.sessionRepository.revokeUserSessions(userId);
+  async revokeAllUserSessions(user_id: string): Promise<void> {
+    await this.sessionRepository.revokeUserSessions(user_id);
   }
 }

@@ -18,14 +18,14 @@ export class AuthRepository {
     id: string,
     name: string,
     email: string,
-    passwordHash: string
+    password_hash: string
   ) {
     await this.db.query(
       `
       INSERT INTO users (id, name, email, password_hash)
       VALUES ($1, $2, $3, $4)
       `,
-      [id, name, email, passwordHash]
+      [id, name, email, password_hash]
     );
   }
 }
